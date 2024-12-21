@@ -5,6 +5,7 @@ namespace Actividad2.Domain.Repository;
 
 public class CatRepository(IGenericRepository<Guid, Cat> repository) : IEntityRepository<Guid, Cat>
 {
+    // TODO - Implements a dynamic database with JSON to use when no database is available
     public IQueryable<Cat> Get() => repository.GetAll();
 
     public Cat? Get(Guid id) => repository.GetById(id);
