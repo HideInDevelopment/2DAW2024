@@ -24,4 +24,13 @@ public static class ExtensionFunctions
     }
 
     private static object? GetDefaultValue(Type type) => type.IsValueType ? Activator.CreateInstance(type) : null;
+
+    public static string GetSpecificPath(string mainFolder, string subFolder)
+    {
+        var currentDirectory = Directory.GetCurrentDirectory();
+        
+        var jsonFilePath = Path.Combine(currentDirectory, mainFolder, subFolder);
+        
+        return jsonFilePath;
+    }
 }
