@@ -30,30 +30,64 @@ public class CatRepository : IEntityRepository<Guid, Cat>
     public IQueryable<Cat> Get() => 
         ExtensionFunctions.IsNullOrEmpty(_cats) ? new List<Cat>().AsQueryable() : _cats.AsQueryable();
     
-
-    public Cat? Get(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
+    public Cat? Get(Guid id) => _cats.FirstOrDefault(c => c.Id == id);
+    
     public Cat? Create(Cat entity)
     {
-        throw new NotImplementedException();
+        if (_cats.All(c => c.Id != entity.Id))
+        {
+            _cats.Add(entity);
+            PersistInJsonFile();
+            return entity;
+        }
+        else
+            return null;
     }
 
     public Cat? Update(Cat entity)
     {
-        throw new NotImplementedException();
+        if (_cats.Any(c => c.Id == entity.Id))
+        {
+            UpdateCat(entity);
+            PersistInJsonFile();
+            return entity;
+        }
+        else
+            return null;
     }
 
     public Cat? Delete(Guid id)
     {
-        throw new NotImplementedException();
+        if (_cats.Any(c => c.Id == id))
+        {
+            var catToDelete = _cats.FirstOrDefault(c => c.Id == id);
+            _cats.Remove(catToDelete!);
+            PersistInJsonFile();
+            return catToDelete;
+        }
+        else
+            return null;
     }
     
     private List<Cat>? FillWithCats()
     {
         var jsonCats = File.ReadAllText(_catsPath);
         return JsonSerializer.Deserialize<List<Cat>>(jsonCats);
+    }
+
+    private void PersistInJsonFile()
+    {
+        var jsonCats = JsonSerializer.Serialize(_cats);
+        File.WriteAllText(_catsPath, jsonCats);
+    }
+
+    private void UpdateCat(Cat entity)
+    {
+        var catToUpdate = _cats.Find(c => c.Id == entity.Id);
+        foreach (var property in catToUpdate!.GetType().GetProperties())
+        {
+            if(property.CanWrite)
+                property.SetValue(catToUpdate, property.GetValue(entity));
+        }
     }
 }
