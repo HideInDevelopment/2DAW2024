@@ -1,7 +1,10 @@
+using Actvidad3.Application.Profiles;
+using Actvidad3.Application.Services;
 using Actvidad3.Application.Settings;
 using Actvidad3.Domain.Entities;
 using Actvidad3.Domain.Repositories;
 using Actvidad3.Domain.Repositories.Contracts;
+using Actvidad3.Domain.Services;
 using Actvidad3.Infrastructure.Persistence;
 using Actvidad3.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +24,15 @@ public static class DependencyInjection
         services.AddScoped<ICatRepository, CatRepository>();
         services.AddScoped<IColonyRepository, ColonyRepository>();
         services.AddScoped<IPartnerRepository, PartnerRepository>();
+        
+        // Services
+        services.AddScoped(typeof(IGenericService<,,>), typeof(GenericService<,,>));
+        services.AddScoped<ICatService, CatService>();
+        services.AddScoped<IColonyService, ColonyService>();
+        services.AddScoped<IPartnerService, PartnerService>();
+        
+        // Mappings
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         
         // Fluent API
         services.AddScoped<IEntityTypeConfiguration<Cat>, CatConfiguration>();
