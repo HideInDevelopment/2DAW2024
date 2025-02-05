@@ -7,6 +7,7 @@ using Actvidad3.Domain.Repositories.Contracts;
 using Actvidad3.Domain.Services;
 using Actvidad3.Infrastructure.Persistence;
 using Actvidad3.Infrastructure.Persistence.Configurations;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace Actvidad3.Common;
@@ -33,6 +34,7 @@ public static class DependencyInjection
         
         // Mappings
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddScoped<IMapper, Mapper>();
         
         // Fluent API
         services.AddScoped<IEntityTypeConfiguration<Cat>, CatConfiguration>();
