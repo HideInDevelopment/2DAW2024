@@ -32,6 +32,8 @@ public class PartnerConfiguration : IEntityConfiguration, IEntityTypeConfigurati
         builder.HasIndex(g => g.Id).HasDatabaseName("IX_Partner_Id");
         builder.HasIndex(g => g.Name).HasDatabaseName("IX_Partner_Name");
         
-        builder.HasMany<Colony>().WithMany(x => x.PartnerItems);
+        builder.HasMany(p => p.ColonyPartnerItems)
+               .WithOne(cp => cp.Partner)
+               .HasForeignKey(cp => cp.PartnerId);
     }
 }

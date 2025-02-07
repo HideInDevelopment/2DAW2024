@@ -27,7 +27,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddSwaggerGen(swg =>
 {
-    swg.SwaggerDoc("v2", new OpenApiInfo { Title = "API", Version = "v2" });
+    swg.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
 });
 
 builder.Services.AddMvc();
@@ -46,8 +46,6 @@ builder.Services.AddCors(options =>
 });
 
 var webApp = builder.Build();
-
-webApp.UseResponseCompression();
 
 webApp.UseHttpsRedirection();
 

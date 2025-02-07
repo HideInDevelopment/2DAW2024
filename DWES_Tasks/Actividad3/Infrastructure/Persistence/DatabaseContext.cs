@@ -44,13 +44,13 @@ public class OrderingContextDesignFactory : IDesignTimeDbContextFactory<Database
         
         var builder = new DbContextOptionsBuilder<DatabaseContext>();
         
-        var connectionString = configurationRoot.GetConnectionString("Database");
+        var connectionString = configurationRoot.GetConnectionString("DWES");
         
         builder.UseSqlServer(
             connectionString,
             sqlServerOptionsAction: sqlOptions =>
             {
-                sqlOptions.MigrationsHistoryTable("__EFMigrationHistory", "ClientMeetingHandler");
+                sqlOptions.MigrationsHistoryTable("__EFMigrationHistory", "DWES");
             });
         
         return new DatabaseContext(builder.Options);

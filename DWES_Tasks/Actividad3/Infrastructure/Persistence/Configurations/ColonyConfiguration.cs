@@ -35,6 +35,8 @@ public class ColonyConfiguration : IEntityConfiguration, IEntityTypeConfiguratio
         builder.HasIndex(g => g.Name).HasDatabaseName("IX_Colony_Name");
         
         builder.HasMany<Cat>().WithOne().HasForeignKey("Id");
-        builder.HasMany<Partner>().WithMany(x => x.ColonyItems);
+        builder.HasMany(c => c.ColonyPartnerItems)
+               .WithOne(cp => cp.Colony)
+               .HasForeignKey(cp => cp.ColonyId);
     }
 }

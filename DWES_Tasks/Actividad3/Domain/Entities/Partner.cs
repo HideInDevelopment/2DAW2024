@@ -8,5 +8,6 @@ public class Partner
     public int Age { get; set; }
     public int TelephoneNumber { get; set; }
     public string Email { get; set; }
-    public IReadOnlyCollection<Colony> ColonyItems { get; set; }
+    
+    public IReadOnlyCollection<ColonyPartner> ColonyPartnerItems { get; set; }
 }
