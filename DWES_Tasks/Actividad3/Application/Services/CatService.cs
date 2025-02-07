@@ -6,9 +6,9 @@ using AutoMapper;
 
 namespace Actvidad3.Application.Services;
 
-public class CatService : GenericService<Guid, CatDto, Cat>, ICatService
+public class CatService : GenericService<Guid, Cat, CatDto>, ICatService
 {
-    public CatService(IGenericRepository<Guid, CatDto> repository, IMapper mapper) : base(repository, mapper)
+    public CatService(IGenericRepository<Guid, Cat> repository, IMapper mapper) : base(repository, mapper)
     {
     }
 }

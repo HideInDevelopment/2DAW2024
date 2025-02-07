@@ -22,27 +22,30 @@ public class GenericService<TKey, TEntity, TDto> : IGenericService<TKey, TEntity
         return _mapper.Map<IEnumerable<TDto>>(entities);
     }
 
-    public async Task<TDto> GetByIdAsync(TKey id)
+    public async Task<TDto?> GetByIdAsync(TKey id)
     {
         var entity = await _repository.GetByIdAsync(id);
         return _mapper.Map<TDto>(entity);
     }
 
-    public async Task AddAsync(TDto dto)
+    public async Task<TDto?> AddAsync(TDto dto)
     {
         var entity = _mapper.Map<TEntity>(dto);
         await _repository.AddAsync(entity);
+        return _mapper.Map<TDto>(entity);
     }
 
-    public async Task UpdateAsync(TDto dto)
+    public async Task<TDto?> UpdateAsync(TDto dto)
     {
         var entity = _mapper.Map<TEntity>(dto);
         await _repository.UpdateAsync(entity);
+        return _mapper.Map<TDto>(entity);
     }
 
-    public async Task DeleteAsync(TKey id)
+    public async Task<TDto?> DeleteAsync(TKey id)
     {
         var entity = await _repository.GetByIdAsync(id);
         await _repository.DeleteAsync(entity);
+        return _mapper.Map<TDto>(entity);
     }
 }

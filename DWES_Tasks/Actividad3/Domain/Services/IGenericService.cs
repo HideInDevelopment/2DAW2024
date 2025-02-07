@@ -4,8 +4,8 @@ public interface IGenericService<TKey, TEntity, TDto> where TEntity : class
 {
     // CRUD Operations
     Task<IEnumerable<TDto>> GetAllAsync();
-    Task<TDto> GetByIdAsync(TKey id);
-    Task AddAsync(TDto dto);
-    Task UpdateAsync(TDto dto);
-    Task DeleteAsync(TKey id);
+    Task<TDto?> GetByIdAsync(TKey id);
+    Task<TDto?> AddAsync(TDto dto);
+    Task<TDto?> UpdateAsync(TDto dto);
+    Task<TDto?> DeleteAsync(TKey id);
 }

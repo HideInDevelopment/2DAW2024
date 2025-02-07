@@ -6,9 +6,9 @@ using AutoMapper;
 
 namespace Actvidad3.Application.Services;
 
-public class PartnerService : GenericService<Guid, PartnerDto, Partner>, IPartnerService
+public class PartnerService : GenericService<Guid, Partner, PartnerDto>, IPartnerService
 {
-    public PartnerService(IGenericRepository<Guid, PartnerDto> repository, IMapper mapper) : base(repository, mapper)
+    public PartnerService(IGenericRepository<Guid, Partner> repository, IMapper mapper) : base(repository, mapper)
     {
     }
 }

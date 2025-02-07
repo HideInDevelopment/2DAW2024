@@ -6,9 +6,9 @@ using AutoMapper;
 
 namespace Actvidad3.Application.Services;
 
-public class ColonyService : GenericService<Guid, ColonyDto, Colony>, IColonyService
+public class ColonyService : GenericService<Guid, Colony, ColonyDto>, IColonyService
 {
-    public ColonyService(IGenericRepository<Guid, ColonyDto> repository, IMapper mapper) : base(repository, mapper)
+    public ColonyService(IGenericRepository<Guid, Colony> repository, IMapper mapper) : base(repository, mapper)
     {
     }
 }

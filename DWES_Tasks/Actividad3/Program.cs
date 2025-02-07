@@ -36,8 +36,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(
         name: "AllowAnyOrigin",
-        builder =>
-            builder
+        bdr =>
+            bdr
                 .WithOrigins("http://localhost")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
