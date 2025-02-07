@@ -1,0 +1,56 @@
+[
+  {
+    "Id": "1c8e1e3b-12f5-4886-813b-f123ef45abcd",
+    "Name": "Yaki",
+    "Age": 1,
+    "Race": "Bombai",
+    "Weight": 4.5,
+    "HealthState": 2,
+    "ColonyId": "26c92e1e-60de-496c-b7ba-d7824014835d"    
+  },
+  {
+    "Id": "123f45b6-c3e7-4cd9-8b1f-98cba12f3e56",
+    "Name": "Luna",
+    "Age": 1,
+    "Race": "Bengal",
+    "Weight": 2,
+    "HealthState": 1,
+    "ColonyId": "92766962-58a9-41b0-afab-49b3297b029d"
+  },
+  {
+    "Id": "789cba23-1ef4-5678-9abc-123b4c5d9ef7",
+    "Name": "Oliver",
+    "Age": 6,
+    "Race": "Russian Blue",
+    "Weight": 4,
+    "HealthState": 0,
+    "ColonyId": "26c92e1e-60de-496c-b7ba-d7824014835d"
+  },
+  {
+    "Id": "234ac9f0-5b67-4c8e-b9a3-8d1e2b3a9c4e",
+    "Name": "Bella",
+    "Age": 2,
+    "Race": "British Shorthair",
+    "Weight": 3,
+    "HealthState": 0,
+    "ColonyId": "92766962-58a9-41b0-afab-49b3297b029d" 
+  },
+  {
+    "Id": "987f6e4b-3c5a-4d1e-9abc-b3a5f8c9e7d2",
+    "Name": "Charlie",
+    "Age": 4,
+    "Race": "Abyssinian",
+    "Weight": 4,
+    "HealthState": 2,
+    "ColonyId": "26c92e1e-60de-496c-b7ba-d7824014835d"
+  },
+  {
+    "Id": "6a7b5c4e-2f3d-4b1e-b9a3-5c9e8f7d2b3a",
+    "Name": "Max",
+    "Age": 3,
+    "Race": "Ragdoll",
+    "Weight": 5,
+    "HealthState": 1,
+    "ColonyId": "92766962-58a9-41b0-afab-49b3297b029d"
+  }
+]
