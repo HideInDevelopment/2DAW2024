@@ -4,18 +4,32 @@ namespace Actvidad3.Common.Functions;
 
 public static class GenericFunctions
 {
-    public static string GetSpecificPath(string mainFolder, string subFolder)
+    public static string? GetSpecificPath(string mainFolder, string subFolder)
     {
-        var currentDirectory = Directory.GetCurrentDirectory();
+        var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
         
-        var jsonFilePath = Path.Combine(currentDirectory, mainFolder, subFolder);
+        var potentialPath= Path.Combine(baseDirectory, mainFolder, subFolder);
         
-        return jsonFilePath;
+        return Directory.Exists(potentialPath) ? potentialPath : SearchForDirectory(baseDirectory, mainFolder, subFolder);
     }
 
-    public static void PersistInJsonFile<TEntity>(string entityPath, IEnumerable<TEntity> entityItems)
+    private static string? SearchForDirectory(string baseDirectory, string mainFolder, string subFolder)
     {
-        var jsonEntityItems = JsonSerializer.Serialize(entityItems);
-        File.WriteAllText(entityPath, jsonEntityItems);
+        try
+        {
+            foreach (var directory in Directory.GetDirectories(baseDirectory, mainFolder, SearchOption.AllDirectories))
+            {
+                var fullPath = Path.Combine(directory, subFolder);
+                
+                if(Directory.Exists(fullPath))
+                    return fullPath;
+            }
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return null;
+        }
+
+        return null;
     }
 }

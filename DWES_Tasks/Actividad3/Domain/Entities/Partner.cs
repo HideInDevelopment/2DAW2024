@@ -1,11 +1,8 @@
-using Actvidad3.Domain.Contracts;
-
 namespace Actvidad3.Domain.Entities;
 
 #nullable disable
-public class Partner : IEntity
+public class Partner : Entity<Guid>
 {
-    public Guid Id { get; set; }
     public string Name { get; set; }
     public int Age { get; set; }
     public int TelephoneNumber { get; set; }

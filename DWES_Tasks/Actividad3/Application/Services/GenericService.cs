@@ -1,3 +1,4 @@
+using Actvidad3.Common.Validators;
 using Actvidad3.Domain.Repositories;
 using Actvidad3.Domain.Services;
 using AutoMapper;
@@ -31,21 +32,21 @@ public class GenericService<TKey, TEntity, TDto> : IGenericService<TKey, TEntity
     public async Task<TDto?> AddAsync(TDto dto)
     {
         var entity = _mapper.Map<TEntity>(dto);
-        await _repository.AddAsync(entity);
-        return _mapper.Map<TDto>(entity);
+        var addedEntity = await _repository.AddAsync(entity);
+        return EntityValidator.IsNullOrDefault(addedEntity) ? default : _mapper.Map<TDto>(addedEntity);
     }
 
     public async Task<TDto?> UpdateAsync(TDto dto)
     {
         var entity = _mapper.Map<TEntity>(dto);
-        await _repository.UpdateAsync(entity);
-        return _mapper.Map<TDto>(entity);
+        var updatedEntity = await _repository.UpdateAsync(entity);
+        return EntityValidator.IsNullOrDefault(updatedEntity) ? default : _mapper.Map<TDto>(updatedEntity);
     }
 
     public async Task<TDto?> DeleteAsync(TKey id)
     {
         var entity = await _repository.GetByIdAsync(id);
-        await _repository.DeleteAsync(entity);
-        return _mapper.Map<TDto>(entity);
+        var deletedEntity = EntityValidator.IsNullOrDefault(entity) ? null : await _repository.DeleteAsync(entity!);
+        return EntityValidator.IsNullOrDefault(deletedEntity) ? default : _mapper.Map<TDto>(deletedEntity);
     }
 }

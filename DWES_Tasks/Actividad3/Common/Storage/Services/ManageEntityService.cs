@@ -1,10 +1,9 @@
 using System.Text.Json;
-using Actvidad3.Domain.Contracts;
 using Actvidad3.Domain.Entities;
 
 namespace Actvidad3.Common.Storage.Services;
 
-public class ManageEntityService<TEntity> where TEntity : class, IEntity
+public class ManageEntityService<TKey, TEntity> where TEntity : Entity<TKey>
 {
     private IEnumerable<TEntity> _entityItems;
 
@@ -13,15 +12,18 @@ public class ManageEntityService<TEntity> where TEntity : class, IEntity
         _entityItems = entityItems;
     }
 
-    public IEnumerable<TEntity>? FillWithItems(string entityPath)
+    public IReadOnlyList<TEntity>? FillWithItems(string entityPath)
     {
         var jsonItems = File.ReadAllText(entityPath);
-        return JsonSerializer.Deserialize<IEnumerable<TEntity>>(jsonItems);
+        return JsonSerializer.Deserialize<IReadOnlyList<TEntity>>(jsonItems);
     }
 
-    private TEntity? UpdateEntity(TEntity entity, IEnumerable<TEntity> entityItems)
+    public bool CompareEntityKeys(TKey leftEntityKey, TKey rightEntityKey) =>
+        EqualityComparer<TKey>.Default.Equals(leftEntityKey, rightEntityKey);
+
+    public TEntity? UpdateEntity(TEntity entity, IEnumerable<TEntity> entityItems)
     {
-        var entityToUpdate = entityItems.ToList().Find(e => e.Id == entity.Id);
+        var entityToUpdate = entityItems.ToList().Find(e => CompareEntityKeys(e.Id, entity.Id));
         if (entityToUpdate == null)
         {
             return null;
@@ -35,4 +37,10 @@ public class ManageEntityService<TEntity> where TEntity : class, IEntity
         
         return entityToUpdate;
     } 
+    
+    public void SaveEntity(string entityPath, IEnumerable<TEntity> entityItems)
+    {
+        var jsonEntityItems = JsonSerializer.Serialize(entityItems);
+        File.WriteAllText(entityPath, jsonEntityItems);
+    }
 }

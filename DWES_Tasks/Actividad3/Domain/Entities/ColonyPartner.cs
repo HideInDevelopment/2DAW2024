@@ -1,12 +1,8 @@
-using Actvidad3.Domain.Contracts;
-
 namespace Actvidad3.Domain.Entities;
 
 #nullable disable
-public class ColonyPartner : IEntity
+public class ColonyPartner : Entity<Guid>   
 {
-    public Guid Id { get; set; }
-    
     public Guid ColonyId { get; set; }
     public Colony Colony { get; set; }
 
