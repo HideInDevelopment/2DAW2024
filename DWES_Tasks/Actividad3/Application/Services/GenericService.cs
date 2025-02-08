@@ -45,8 +45,7 @@ public class GenericService<TKey, TEntity, TDto> : IGenericService<TKey, TEntity
 
     public async Task<TDto?> DeleteAsync(TKey id)
     {
-        var entity = await _repository.GetByIdAsync(id);
-        var deletedEntity = EntityValidator.IsNullOrDefault(entity) ? null : await _repository.DeleteAsync(entity!);
+        var deletedEntity = await _repository.DeleteAsync(id);
         return EntityValidator.IsNullOrDefault(deletedEntity) ? default : _mapper.Map<TDto>(deletedEntity);
     }
 }

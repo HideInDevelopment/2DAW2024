@@ -19,7 +19,8 @@ public class CatController : ControllerBase
     [HttpGet()]
     public async Task<ActionResult> Get()
     {
-        var response = await _catService.GetAllAsync();
+        //var response = await _catService.GetAllAsync();
+        var response = await _catService.GetStoredCatItems();
 
         if (ListValidator.IsNullOrEmpty(response))
         {

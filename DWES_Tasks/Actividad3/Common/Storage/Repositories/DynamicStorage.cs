@@ -1,4 +1,5 @@
 using Actvidad3.Common.Functions;
+using Actvidad3.Common.Storage.Factories;
 using Actvidad3.Common.Storage.Services;
 using Actvidad3.Domain.Entities;
 
@@ -16,21 +17,25 @@ public class DynamicStorage
     private readonly IReadOnlyList<Partner> _storedPartnerItems;
     private readonly IReadOnlyList<ColonyPartner> _storedColonyPartnerItems;
     
-    private readonly ManageEntityService<Guid, Cat> _catManager;
-    private readonly ManageEntityService<Guid, Colony> _colonyManager;
-    private readonly ManageEntityService<Guid, Partner> _partnerManager;
-    private readonly ManageEntityService<Guid, ColonyPartner> _colonyPartnerManager;
+    private readonly IStorageRepositoryFactory _storageFactory;
     
-    private readonly CatRepository _catRepository;
-    private readonly ColonyRepository _colonyRepository;
-    private readonly PartnerRepository _partnerRepository;
-    private readonly ColonyPartnerRepository _colonyPartnerRepository;
+    private readonly EntityServiceManager<Guid, Cat> _catManager;
+    private readonly EntityServiceManager<Guid, Colony> _colonyManager;
+    private readonly EntityServiceManager<Guid, Partner> _partnerManager;
+    private readonly EntityServiceManager<Guid, ColonyPartner> _colonyPartnerManager;
+    
+    private StorageCatRepository StorageCatRepository { get; }
+    private StorageColonyRepository StorageColonyRepository { get; }
+    private StoragePartnerRepository StoragePartnerRepository { get; }
+    private StorageColonyPartnerRepository StorageColonyPartnerRepository { get; }
 
-    public DynamicStorage(ManageEntityService<Guid,Cat> catManager,
-        ManageEntityService<Guid, Colony> colonyManager,
-        ManageEntityService<Guid, Partner> partnerManager,
-        ManageEntityService<Guid, ColonyPartner> colonyPartnerManager)
+    public DynamicStorage(IStorageRepositoryFactory storageFactory,
+        EntityServiceManager<Guid,Cat> catManager,
+        EntityServiceManager<Guid, Colony> colonyManager,
+        EntityServiceManager<Guid, Partner> partnerManager,
+        EntityServiceManager<Guid, ColonyPartner> colonyPartnerManager)
     {
+        _storageFactory = storageFactory;
         _catManager = catManager;
         _colonyManager = colonyManager;
         _partnerManager = partnerManager;
@@ -41,9 +46,64 @@ public class DynamicStorage
         _storedPartnerItems = _partnerManager.FillWithItems(_partnerPath) ??  Array.Empty<Partner>();
         _storedColonyPartnerItems = _colonyPartnerManager.FillWithItems(_colonyPartnerPath) ??  Array.Empty<ColonyPartner>();
 
-        _catRepository = new CatRepository(_catPath, _storedCatItems, _catManager);
-        _colonyRepository = new ColonyRepository(_colonyPath, _storedColonyItems, _colonyManager);
-        _partnerRepository = new PartnerRepository(_partnerPath, _storedPartnerItems, _partnerManager);
-        _colonyPartnerRepository = new ColonyPartnerRepository(_colonyPartnerPath, _storedColonyPartnerItems, _colonyPartnerManager);
+        StorageCatRepository = _storageFactory.CreateCatRepository(_catPath, _storedCatItems, _catManager);
+        StorageColonyRepository = _storageFactory.CreateColonyRepository(_colonyPath, _storedColonyItems, _colonyManager);
+        StoragePartnerRepository = _storageFactory.CreatePartnerRepository(_partnerPath, _storedPartnerItems, _partnerManager);
+        StorageColonyPartnerRepository = _storageFactory.CreateColonyPartnerRepository(_colonyPartnerPath, _storedColonyPartnerItems, _colonyPartnerManager);
+    }
+    
+    // Cat zone
+    public async Task<IReadOnlyList<Cat>> GetStoredCatItems() => await Task.FromResult(_storedCatItems);
+    public async Task<Cat?> GetStoredCatById(Guid id) => await Task.FromResult(_storedCatItems.FirstOrDefault(x => x.Id == id));
+    public async Task<Cat?> SaveCatInStore(Cat cat) => await StorageCatRepository.AddAsync(cat);
+    public async Task<Cat?> UpdateCatInStore(Cat cat) => await StorageCatRepository.UpdateAsync(cat);
+    public async Task<Cat?> DeleteCatFromStore(Guid id) => await StorageCatRepository.DeleteAsync(id);
+
+    // Colony zone
+    public async Task<IReadOnlyList<Colony>> GetIncompleteStoredColonyItems() => await Task.FromResult(_storedColonyItems);
+    public async Task<IReadOnlyList<Colony>> GetCompleteStoredColonyItems()
+    {
+        var catItems = await GetStoredCatItems();
+        var colonyPartnerItems = await GetCompleteColonyPartnerItems();
+        
+        foreach (var colony in _storedColonyItems)
+        {
+            // Obtaining catItems from this colony
+            colony.CatItems = catItems.Where(c => c.ColonyId == colony.Id) as IReadOnlyList<Cat>;
+            
+            // Obtaining colonyPartnerItems from this colony
+            colony.ColonyPartnerItems = colonyPartnerItems.Where(c => c.ColonyId == colony.Id) as IReadOnlyList<ColonyPartner>;
+        }
+        return await Task.FromResult(_storedColonyItems);
+    }
+
+    // Partner zone
+    public async Task<IReadOnlyList<Partner>> GetIncompleteStoredPartnerItems() => await Task.FromResult(_storedPartnerItems);
+    
+    public async Task<IReadOnlyList<Partner>> GetCompleteStoredPartnerItems()
+    {
+        var colonyPartnerItems = await GetCompleteColonyPartnerItems();
+        
+        foreach (var partner in _storedPartnerItems)
+        {
+            // Obtaining colonyPartnerItems from this colony
+            partner.ColonyPartnerItems = colonyPartnerItems.Where(c => c.PartnerId == partner.Id) as IReadOnlyList<ColonyPartner>;
+        }
+        return await Task.FromResult(_storedPartnerItems);
+    }
+    
+    //ColonyPartner zone
+    public async Task<IReadOnlyList<ColonyPartner>> GetCompleteColonyPartnerItems()
+    {
+        var colonyItems = await GetIncompleteStoredColonyItems();
+        var partnerItems = await GetCompleteStoredColonyItems();
+        
+        foreach (var colonyPartner in _storedColonyPartnerItems)
+        {
+            colonyPartner.Colony = colonyItems.FirstOrDefault(c => c.Id == colonyPartner.ColonyId);
+            colonyPartner.Colony = partnerItems.FirstOrDefault(p => p.Id == colonyPartner.PartnerId);
+        }
+
+        return await Task.FromResult(_storedColonyPartnerItems);
     }
 }

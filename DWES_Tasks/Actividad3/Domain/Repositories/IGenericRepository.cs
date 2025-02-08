@@ -7,5 +7,5 @@ public interface IGenericRepository<TKey, TEntity> where TEntity : class
     Task<TEntity?> GetByIdAsync(TKey id);
     Task<TEntity?> AddAsync(TEntity entity);
     Task<TEntity?> UpdateAsync(TEntity entity);
-    Task<TEntity?> DeleteAsync(TEntity entity);
+    Task<TEntity?> DeleteAsync(TKey key);
 }

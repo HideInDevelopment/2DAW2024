@@ -3,11 +3,11 @@ using Actvidad3.Domain.Entities;
 
 namespace Actvidad3.Common.Storage.Services;
 
-public class ManageEntityService<TKey, TEntity> where TEntity : Entity<TKey>
+public class EntityServiceManager<TKey, TEntity> where TEntity : Entity<TKey>
 {
     private IEnumerable<TEntity> _entityItems;
 
-    public ManageEntityService(IEnumerable<TEntity> entityItems)
+    public EntityServiceManager(IEnumerable<TEntity> entityItems)
     {
         _entityItems = entityItems;
     }

@@ -5,14 +5,14 @@ using Actvidad3.Domain.Repositories;
 
 namespace Actvidad3.Common.Storage.Repositories;
 
-public class GenericRepository<TKey, TEntity> : IGenericRepository<TKey, TEntity> where TEntity : Entity<TKey>
+public class StorageRepository<TKey, TEntity> : IGenericRepository<TKey, TEntity> where TEntity : Entity<TKey>
 {
     private readonly string _filePath;
     private readonly IReadOnlyList<TEntity> _storedItems;
-    private readonly ManageEntityService<TKey, TEntity> _entityManager;
+    private readonly EntityServiceManager<TKey, TEntity> _entityManager;
 
-    public GenericRepository(string filePath, IReadOnlyList<TEntity> storedItems,
-        ManageEntityService<TKey, TEntity> entityManager)
+    public StorageRepository(string filePath, IReadOnlyList<TEntity> storedItems,
+        EntityServiceManager<TKey, TEntity> entityManager)
     {
         _filePath = filePath;
         _storedItems = storedItems;
@@ -42,8 +42,10 @@ public class GenericRepository<TKey, TEntity> : IGenericRepository<TKey, TEntity
         return Task.FromResult<TEntity?>(entity);
     }
 
-    public Task<TEntity?> DeleteAsync(TEntity entity)
+    public Task<TEntity?> DeleteAsync(TKey key)
     {
+        var entity = _storedItems.ToList().Find(x => _entityManager.CompareEntityKeys(x.Id, key));
+        if (entity is null) return Task.FromResult<TEntity?>(null);
         _storedItems.ToList().Remove(entity);
         return Task.FromResult<TEntity?>(entity);
     }

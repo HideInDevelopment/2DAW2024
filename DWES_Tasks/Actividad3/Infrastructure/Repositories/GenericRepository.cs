@@ -53,8 +53,10 @@ public class GenericRepository<TKey, TEntity> : IGenericRepository<TKey, TEntity
         }
     }
     
-    public async Task<TEntity?> DeleteAsync(TEntity entity)
+    public async Task<TEntity?> DeleteAsync(TKey key)
     {
+        var entity = await _entity.FindAsync(key);
+        if (entity is null) return null;
         _entity.Remove(entity);
         try
         {

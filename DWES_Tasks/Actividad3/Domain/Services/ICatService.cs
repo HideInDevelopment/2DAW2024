@@ -5,5 +5,5 @@ namespace Actvidad3.Domain.Services;
 
 public interface ICatService : IGenericService<Guid, Cat, CatDto>
 {
-    
+    Task<IReadOnlyList<CatDto>?> GetStoredCatItems();
 }
