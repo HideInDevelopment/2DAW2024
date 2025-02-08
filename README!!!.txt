@@ -1,7 +1,7 @@
 Recomendaciones a tener en cuenta a la hora de corregir el ejercicio sin problemas:
 
 Instalar Visual Studio 2022 (versión non-license) o en su defecto Jetbrains Rider (versión non-license).
-Instalar versión de .NET SDK 8 (https://dotnet.microsoft.com/es-es/download/dotnet/8.0)
+Instalar versión de .NET SDK 9 (https://dotnet.microsoft.com/es-es/download/dotnet/9.0)
 Instalar los siguientes nugets y sus versiones desde el Administrador de paquetes NuGet en el IDE:
 
 	Microsoft.EntityFrameworkCore			versión: 9.0.1
