@@ -1,3 +1,5 @@
+Dentro de la carpeta DWES_Tasks estan los proyectos Actividad2.sln y Actividad3.sln. Cada uno hace referencia a las actividades indicadas en aulas virtuales 😉
+
 Recomendaciones a tener en cuenta a la hora de corregir el ejercicio sin problemas:
 
 Instalar Visual Studio 2022 (versión non-license) o en su defecto Jetbrains Rider (versión non-license).
