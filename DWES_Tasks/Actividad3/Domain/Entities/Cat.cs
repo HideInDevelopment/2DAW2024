@@ -1,10 +1,11 @@
+using Actvidad3.Domain.Contracts;
 using Actvidad3.Domain.Enums;
 
 namespace Actvidad3.Domain.Entities;
 
 #nullable disable
 
-public class Cat
+public class Cat : IEntity
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

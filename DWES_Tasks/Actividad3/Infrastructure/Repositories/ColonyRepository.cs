@@ -4,9 +4,4 @@ using Actvidad3.Infrastructure.Persistence;
 
 namespace Actvidad3.Domain.Repositories;
 
-public class ColonyRepository : GenericRepository<Guid, Colony>, IColonyRepository
-{
-    public ColonyRepository(DatabaseContext context) : base(context)
-    {
-    }
-}
+public class ColonyRepository(DatabaseContext context) : GenericRepository<Guid, Colony>(context), IColonyRepository;
