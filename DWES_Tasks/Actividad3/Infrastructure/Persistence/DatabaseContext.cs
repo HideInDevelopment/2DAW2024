@@ -12,9 +12,11 @@ public class DatabaseContext : DbContext
     public DbSet<Colony> Colonies { get; set; }
     public DbSet<Cat> Cats { get; set; }
     public DbSet<Partner> Partners { get; set; }
+    public DbSet<ColonyPartner> ColonyPartners { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(DatabaseContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }
     

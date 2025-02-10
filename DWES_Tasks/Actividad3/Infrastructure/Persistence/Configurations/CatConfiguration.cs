@@ -29,6 +29,11 @@ public class CatConfiguration : IEntityTypeConfiguration<Cat>
         builder.HasIndex(g => g.Name).HasDatabaseName("IX_Cat_Name");
         builder.HasIndex(g => g.Race).HasDatabaseName("IX_Cat_Race");
         
+        builder.HasOne(c => c.Colony)
+               .WithMany(colony => colony.CatItems)
+               .HasForeignKey(c => c.ColonyId)
+               .OnDelete(DeleteBehavior.Cascade);
+        
         builder.ToTable("Cats", "DWES");
     }
 }

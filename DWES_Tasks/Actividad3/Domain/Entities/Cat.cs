@@ -12,4 +12,6 @@ public class Cat : Entity<Guid>
     public double Weight { get; set; }
     public HealthState HealthState { get; set; }
     public Guid ColonyId { get; set; }
+    
+    public virtual Colony Colony { get; set; }
 }

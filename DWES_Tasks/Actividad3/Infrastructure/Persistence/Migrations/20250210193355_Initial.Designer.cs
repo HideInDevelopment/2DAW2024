@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Actividad3.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20250209160755_Initial")]
+    [Migration("20250210193355_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -32,6 +32,7 @@ namespace Actividad3.Infrastructure.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Age")
+                        .HasMaxLength(2)
                         .HasColumnType("int");
 
                     b.Property<Guid>("ColonyId")
@@ -41,19 +42,31 @@ namespace Actividad3.Infrastructure.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Race")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<double>("Weight")
+                        .HasMaxLength(5)
                         .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ColonyId");
 
-                    b.ToTable("Cats");
+                    b.HasIndex("Id")
+                        .HasDatabaseName("IX_Cat_Id");
+
+                    b.HasIndex("Name")
+                        .HasDatabaseName("IX_Cat_Name");
+
+                    b.HasIndex("Race")
+                        .HasDatabaseName("IX_Cat_Race");
+
+                    b.ToTable("Cats", "DWES");
                 });
 
             modelBuilder.Entity("Actividad3.Domain.Entities.Colony", b =>
@@ -63,26 +76,38 @@ namespace Actividad3.Infrastructure.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("MobileNumber")
+                        .HasMaxLength(10)
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<int>("TelephoneNumber")
+                        .HasMaxLength(10)
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colonies");
+                    b.HasIndex("Id")
+                        .HasDatabaseName("IX_Colony_Id");
+
+                    b.HasIndex("Name")
+                        .HasDatabaseName("IX_Colony_Name");
+
+                    b.ToTable("Colonies", "DWES");
                 });
 
             modelBuilder.Entity("Actividad3.Domain.Entities.ColonyPartner", b =>
@@ -103,7 +128,7 @@ namespace Actividad3.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PartnerId");
 
-                    b.ToTable("ColonyPartner");
+                    b.ToTable("ColonyPartners", "DWES");
                 });
 
             modelBuilder.Entity("Actividad3.Domain.Entities.Partner", b =>
@@ -113,29 +138,41 @@ namespace Actividad3.Infrastructure.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Age")
+                        .HasMaxLength(2)
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<int>("TelephoneNumber")
+                        .HasMaxLength(100)
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Partners");
+                    b.HasIndex("Id")
+                        .HasDatabaseName("IX_Partner_Id");
+
+                    b.HasIndex("Name")
+                        .HasDatabaseName("IX_Partner_Name");
+
+                    b.ToTable("Partners", "DWES");
                 });
 
             modelBuilder.Entity("Actividad3.Domain.Entities.Cat", b =>
                 {
-                    b.HasOne("Actividad3.Domain.Entities.Colony", null)
+                    b.HasOne("Actividad3.Domain.Entities.Colony", "Colony")
                         .WithMany("CatItems")
                         .HasForeignKey("ColonyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Colony");
                 });
 
             modelBuilder.Entity("Actividad3.Domain.Entities.ColonyPartner", b =>
