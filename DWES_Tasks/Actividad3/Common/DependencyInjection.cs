@@ -43,13 +43,9 @@ public static class DependencyInjection
         
         // Fluent API
         services.AddScoped<IEntityTypeConfiguration<Cat>, CatConfiguration>();
-        services.AddScoped<IEntityConfiguration, CatConfiguration>();
         services.AddScoped<IEntityTypeConfiguration<Colony>, ColonyConfiguration>();
-        services.AddScoped<IEntityConfiguration, ColonyConfiguration>();
         services.AddScoped<IEntityTypeConfiguration<Partner>, PartnerConfiguration>();
-        services.AddScoped<IEntityConfiguration, PartnerConfiguration>();
         services.AddScoped<IEntityTypeConfiguration<ColonyPartner>, ColonyPartnerConfiguration>();
-        services.AddScoped<IEntityConfiguration, ColonyPartnerConfiguration>();
         
         // AppSettings
         services.Configure<AppSettings>(configuration.GetSection("Settings"));

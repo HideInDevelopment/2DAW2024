@@ -6,14 +6,8 @@ using Microsoft.Extensions.Options;
 
 namespace Actividad3.Infrastructure.Persistence.Configurations;
 
-public class CatConfiguration : IEntityConfiguration, IEntityTypeConfiguration<Cat>
+public class CatConfiguration : IEntityTypeConfiguration<Cat>
 {
-    private readonly CatSettings _catSettings;
-
-    public CatConfiguration(IOptions<AppSettings> appSettings)
-    {
-        _catSettings = appSettings.Value.Cat;
-    }
     public void Configure(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(this);
@@ -24,10 +18,10 @@ public class CatConfiguration : IEntityConfiguration, IEntityTypeConfiguration<C
         builder.HasKey(g => g.Id);
         builder.Property(g => g.Id).ValueGeneratedOnAdd();
 
-        builder.Property(g => g.Name).HasMaxLength(_catSettings.NameMaxLength);
-        builder.Property(g => g.Age).HasMaxLength(_catSettings.AgeMaxLength);
-        builder.Property(g => g.Race).HasMaxLength(_catSettings.RaceMaxLength);
-        builder.Property(g => g.Weight).HasMaxLength(_catSettings.WeightMaxLength);
+        builder.Property(g => g.Name).HasMaxLength(150);
+        builder.Property(g => g.Age).HasMaxLength(2);
+        builder.Property(g => g.Race).HasMaxLength(50);
+        builder.Property(g => g.Weight).HasMaxLength(5);
         builder.Property(g => g.HealthState);
         builder.Property(g => g.ColonyId);
 

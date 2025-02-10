@@ -6,14 +6,8 @@ using Microsoft.Extensions.Options;
 
 namespace Actividad3.Infrastructure.Persistence.Configurations;
 
-public class ColonyConfiguration : IEntityConfiguration, IEntityTypeConfiguration<Colony>
+public class ColonyConfiguration : IEntityTypeConfiguration<Colony>
 {
-    private readonly ColonySettings _colonySettings;
-
-    public ColonyConfiguration(IOptions<AppSettings> appSettings)
-    {
-        _colonySettings = appSettings.Value.Colony;
-    }
     public void Configure(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(this);
@@ -24,12 +18,12 @@ public class ColonyConfiguration : IEntityConfiguration, IEntityTypeConfiguratio
         builder.HasKey(g => g.Id);
         builder.Property(g => g.Id).ValueGeneratedOnAdd();
 
-        builder.Property(g => g.Name).HasMaxLength(_colonySettings.NameMaxLength);
-        builder.Property(g => g.Location).HasMaxLength(_colonySettings.LocationMaxLength);
-        builder.Property(g => g.TelephoneNumber).HasMaxLength(_colonySettings.TelephoneNumberMaxLength);
-        builder.Property(g => g.MobileNumber).HasMaxLength(_colonySettings.MobileNumberMaxLength);
-        builder.Property(g => g.Description).HasMaxLength(_colonySettings.DescriptionMaxLength);
-        builder.Property(g => g.Image).HasMaxLength(_colonySettings.ImageMaxLength);
+        builder.Property(g => g.Name).HasMaxLength(150);
+        builder.Property(g => g.Location).HasMaxLength(50);
+        builder.Property(g => g.TelephoneNumber).HasMaxLength(10);
+        builder.Property(g => g.MobileNumber).HasMaxLength(10);
+        builder.Property(g => g.Description).HasMaxLength(10);
+        builder.Property(g => g.Image).HasMaxLength(10);
 
         builder.HasIndex(g => g.Id).HasDatabaseName("IX_Colony_Id");
         builder.HasIndex(g => g.Name).HasDatabaseName("IX_Colony_Name");

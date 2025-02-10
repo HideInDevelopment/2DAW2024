@@ -6,14 +6,8 @@ using Microsoft.Extensions.Options;
 
 namespace Actividad3.Infrastructure.Persistence.Configurations;
 
-public class PartnerConfiguration : IEntityConfiguration, IEntityTypeConfiguration<Partner>
+public class PartnerConfiguration : IEntityTypeConfiguration<Partner>
 {
-    private readonly PartnerSettings _partnerSettings;
-
-    public PartnerConfiguration(IOptions<AppSettings> appSettings)
-    {
-        _partnerSettings = appSettings.Value.Partner;
-    }
     public void Configure(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(this);
@@ -24,10 +18,10 @@ public class PartnerConfiguration : IEntityConfiguration, IEntityTypeConfigurati
         builder.HasKey(g => g.Id);
         builder.Property(g => g.Id).ValueGeneratedOnAdd();
 
-        builder.Property(g => g.Name).HasMaxLength(_partnerSettings.NameMaxLength);
-        builder.Property(g => g.Age).HasMaxLength(_partnerSettings.AgeMaxLength);
-        builder.Property(g => g.TelephoneNumber).HasMaxLength(_partnerSettings.TelephoneNumberMaxLength);
-        builder.Property(g => g.Email).HasMaxLength(_partnerSettings.EmailMaxLength);
+        builder.Property(g => g.Name).HasMaxLength(150);
+        builder.Property(g => g.Age).HasMaxLength(2);
+        builder.Property(g => g.TelephoneNumber).HasMaxLength(100);
+        builder.Property(g => g.Email).HasMaxLength(100);
 
         builder.HasIndex(g => g.Id).HasDatabaseName("IX_Partner_Id");
         builder.HasIndex(g => g.Name).HasDatabaseName("IX_Partner_Name");

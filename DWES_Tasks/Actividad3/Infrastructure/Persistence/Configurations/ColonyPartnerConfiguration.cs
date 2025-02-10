@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Actividad3.Infrastructure.Persistence.Configurations;
 
-public class ColonyPartnerConfiguration : IEntityConfiguration, IEntityTypeConfiguration<ColonyPartner>
+public class ColonyPartnerConfiguration: IEntityTypeConfiguration<ColonyPartner>
 {
     public void Configure(ModelBuilder modelBuilder)
     {

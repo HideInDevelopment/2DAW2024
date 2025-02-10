@@ -7,15 +7,7 @@ namespace Actividad3.Infrastructure.Persistence;
 
 public class DatabaseContext : DbContext
 {
-    private readonly IEnumerable<IEntityConfiguration>? _configurations;
-    
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
-    
-    public DatabaseContext(DbContextOptions<DatabaseContext> options,
-        IEnumerable<IEntityConfiguration> configurations) : base(options)
-    {
-        _configurations = configurations;
-    }
     
     public DbSet<Colony> Colonies { get; set; }
     public DbSet<Cat> Cats { get; set; }
@@ -23,13 +15,6 @@ public class DatabaseContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        if (_configurations != null)
-        {
-            foreach (var configuration in _configurations)
-            {
-                configuration.Configure(modelBuilder);
-            }
-        }
         base.OnModelCreating(modelBuilder);
     }
     
