@@ -1,10 +1,10 @@
-using Actvidad3.Application.Settings;
-using Actvidad3.Domain.Entities;
+using Actividad3.Application.Settings;
+using Actividad3.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Options;
 
-namespace Actvidad3.Infrastructure.Persistence.Configurations;
+namespace Actividad3.Infrastructure.Persistence.Configurations;
 
 public class ColonyConfiguration : IEntityConfiguration, IEntityTypeConfiguration<Colony>
 {
@@ -38,5 +38,7 @@ public class ColonyConfiguration : IEntityConfiguration, IEntityTypeConfiguratio
         builder.HasMany(c => c.ColonyPartnerItems)
                .WithOne(cp => cp.Colony)
                .HasForeignKey(cp => cp.ColonyId);
+        
+        builder.ToTable("Colonies", "DWES");
     }
 }

@@ -1,6 +1,6 @@
-using Actvidad3.Domain.Enums;
+using Actividad3.Domain.Enums;
 
-namespace Actvidad3.Domain.Entities;
+namespace Actividad3.Domain.Entities;
 
 #nullable disable
 

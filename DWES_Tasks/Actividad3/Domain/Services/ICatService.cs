@@ -1,9 +1,8 @@
-using Actvidad3.Domain.Entities;
-using Actvidad3.Presentation.Dtos;
+using Actividad3.Domain.Entities;
+using Actividad3.Presentation.Dtos;
 
-namespace Actvidad3.Domain.Services;
+namespace Actividad3.Domain.Services;
 
 public interface ICatService : IGenericService<Guid, Cat, CatDto>
 {
-    Task<IReadOnlyList<CatDto>?> GetStoredCatItems();
 }

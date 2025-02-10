@@ -1,10 +1,10 @@
-using Actvidad3.Application.Settings;
-using Actvidad3.Domain.Entities;
+using Actividad3.Application.Settings;
+using Actividad3.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Options;
 
-namespace Actvidad3.Infrastructure.Persistence.Configurations;
+namespace Actividad3.Infrastructure.Persistence.Configurations;
 
 public class CatConfiguration : IEntityConfiguration, IEntityTypeConfiguration<Cat>
 {
@@ -34,5 +34,7 @@ public class CatConfiguration : IEntityConfiguration, IEntityTypeConfiguration<C
         builder.HasIndex(g => g.Id).HasDatabaseName("IX_Cat_Id");
         builder.HasIndex(g => g.Name).HasDatabaseName("IX_Cat_Name");
         builder.HasIndex(g => g.Race).HasDatabaseName("IX_Cat_Race");
+        
+        builder.ToTable("Cats", "DWES");
     }
 }

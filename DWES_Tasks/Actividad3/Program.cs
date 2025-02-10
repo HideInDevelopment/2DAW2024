@@ -1,5 +1,5 @@
 using System.Text.Json;
-using Actvidad3.Common;
+using Actividad3.Common;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,10 +1,10 @@
-using Actvidad3.Domain.Entities;
-using Actvidad3.Domain.Repositories;
-using Actvidad3.Domain.Services;
-using Actvidad3.Presentation.Dtos;
+using Actividad3.Domain.Entities;
+using Actividad3.Domain.Repositories;
+using Actividad3.Domain.Services;
+using Actividad3.Presentation.Dtos;
 using AutoMapper;
 
-namespace Actvidad3.Application.Services;
+namespace Actividad3.Application.Services;
 
 public class PartnerService : GenericService<Guid, Partner, PartnerDto>, IPartnerService
 {

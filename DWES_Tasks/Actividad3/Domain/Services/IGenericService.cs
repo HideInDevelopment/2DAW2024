@@ -1,4 +1,4 @@
-namespace Actvidad3.Domain.Services;
+namespace Actividad3.Domain.Services;
 
 public interface IGenericService<TKey, TEntity, TDto> where TEntity : class
 {

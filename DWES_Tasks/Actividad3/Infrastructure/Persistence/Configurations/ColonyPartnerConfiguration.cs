@@ -1,8 +1,8 @@
-using Actvidad3.Domain.Entities;
+using Actividad3.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Actvidad3.Infrastructure.Persistence.Configurations;
+namespace Actividad3.Infrastructure.Persistence.Configurations;
 
 public class ColonyPartnerConfiguration : IEntityConfiguration, IEntityTypeConfiguration<ColonyPartner>
 {
@@ -22,5 +22,7 @@ public class ColonyPartnerConfiguration : IEntityConfiguration, IEntityTypeConfi
         builder.HasOne(cp => cp.Partner)
             .WithMany(p => p.ColonyPartnerItems)
             .HasForeignKey(cp => cp.PartnerId);
+        
+        builder.ToTable("ColonyPartners", "DWES");
     }
 }

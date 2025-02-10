@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Actvidad3.Infrastructure.Persistence.Configurations;
+namespace Actividad3.Infrastructure.Persistence.Configurations;
 
 public interface IEntityConfiguration
 {

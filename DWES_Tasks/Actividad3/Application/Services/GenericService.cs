@@ -1,9 +1,9 @@
-using Actvidad3.Common.Validators;
-using Actvidad3.Domain.Repositories;
-using Actvidad3.Domain.Services;
+using Actividad3.Common.Validators;
+using Actividad3.Domain.Repositories;
+using Actividad3.Domain.Services;
 using AutoMapper;
 
-namespace Actvidad3.Application.Services;
+namespace Actividad3.Application.Services;
 
 public class GenericService<TKey, TEntity, TDto> : IGenericService<TKey, TEntity, TDto>
     where TEntity : class

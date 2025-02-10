@@ -1,4 +1,4 @@
-namespace Actvidad3.Common.Validators;
+namespace Actividad3.Common.Validators;
 
 public static class EntityValidator
 {

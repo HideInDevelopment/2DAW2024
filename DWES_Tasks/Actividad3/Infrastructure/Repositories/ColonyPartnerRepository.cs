@@ -1,7 +1,7 @@
-using Actvidad3.Domain.Entities;
-using Actvidad3.Infrastructure.Persistence;
+using Actividad3.Domain.Entities;
+using Actividad3.Infrastructure.Persistence;
 
-namespace Actvidad3.Domain.Repositories;
+namespace Actividad3.Domain.Repositories;
 
 public class ColonyPartnerRepository(DatabaseContext context)
     : GenericRepository<Guid, ColonyPartner>(context), IColonyPartnerRepository;

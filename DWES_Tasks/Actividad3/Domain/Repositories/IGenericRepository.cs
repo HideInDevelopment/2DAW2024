@@ -1,4 +1,4 @@
-namespace Actvidad3.Domain.Repositories;
+namespace Actividad3.Domain.Repositories;
 
 public interface IGenericRepository<TKey, TEntity> where TEntity : class
 {

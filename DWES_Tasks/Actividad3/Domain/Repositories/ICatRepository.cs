@@ -1,6 +1,6 @@
-using Actvidad3.Domain.Entities;
+using Actividad3.Domain.Entities;
 
-namespace Actvidad3.Domain.Repositories.Contracts;
+namespace Actividad3.Domain.Repositories.Contracts;
 
 public interface ICatRepository : IGenericRepository<Guid, Cat>
 {

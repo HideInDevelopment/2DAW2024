@@ -1,13 +1,13 @@
-using Actvidad3.Domain.Entities;
-using Actvidad3.Infrastructure.Persistence.Configurations;
+using Actividad3.Domain.Entities;
+using Actividad3.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace Actvidad3.Infrastructure.Persistence;
+namespace Actividad3.Infrastructure.Persistence;
 
 public class DatabaseContext : DbContext
 {
-    private readonly IEnumerable<IEntityConfiguration> _configurations;
+    private readonly IEnumerable<IEntityConfiguration>? _configurations;
     
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
     
@@ -23,11 +23,13 @@ public class DatabaseContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        foreach (var configuration in _configurations)
+        if (_configurations != null)
         {
-            configuration.Configure(modelBuilder);
+            foreach (var configuration in _configurations)
+            {
+                configuration.Configure(modelBuilder);
+            }
         }
-        
         base.OnModelCreating(modelBuilder);
     }
     
@@ -39,12 +41,12 @@ public class OrderingContextDesignFactory : IDesignTimeDbContextFactory<Database
     {
         IConfigurationRoot configurationRoot = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
+            .AddJsonFile("appsettings.json", optional: true)
             .Build();
         
         var builder = new DbContextOptionsBuilder<DatabaseContext>();
         
-        var connectionString = configurationRoot.GetConnectionString("DWES");
+        var connectionString = configurationRoot.GetConnectionString("DAW");
         
         builder.UseSqlServer(
             connectionString,

@@ -1,9 +1,9 @@
-using Actvidad3.Common.Validators;
-using Actvidad3.Domain.Services;
-using Actvidad3.Presentation.Dtos;
+using Actividad3.Common.Validators;
+using Actividad3.Domain.Services;
+using Actividad3.Presentation.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Actvidad3.Presentation.Controller;
+namespace Actividad3.Presentation.Controller;
 
 [ApiController]
 [Route("[controller]")]

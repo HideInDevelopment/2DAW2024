@@ -1,6 +1,6 @@
-using Actvidad3.Domain.Enums;
+using Actividad3.Domain.Enums;
 
-namespace Actvidad3.Presentation.Dtos;
+namespace Actividad3.Presentation.Dtos;
 
 #nullable disable
 public class CatDto

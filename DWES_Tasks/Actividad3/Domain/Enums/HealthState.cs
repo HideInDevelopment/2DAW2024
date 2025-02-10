@@ -1,4 +1,4 @@
-﻿namespace Actvidad3.Domain.Enums;
+﻿namespace Actividad3.Domain.Enums;
 
 public enum HealthState
 {

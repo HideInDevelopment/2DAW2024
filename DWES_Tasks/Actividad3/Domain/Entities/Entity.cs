@@ -1,4 +1,4 @@
-namespace Actvidad3.Domain.Entities;
+namespace Actividad3.Domain.Entities;
 
 public class Entity<TKey>
 {

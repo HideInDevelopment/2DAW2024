@@ -4,7 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>Actvidad3</RootNamespace>
+        <RootNamespace>Actividad3</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

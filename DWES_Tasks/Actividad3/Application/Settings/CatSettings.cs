@@ -1,4 +1,4 @@
-namespace Actvidad3.Application.Settings;
+namespace Actividad3.Application.Settings;
 
 public class CatSettings
 {
