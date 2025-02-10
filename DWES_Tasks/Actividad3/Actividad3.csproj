@@ -35,4 +35,11 @@
       <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.2.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Common\Storage\Database\CatDB\Cat.json" />
+      <_ContentIncludedByDefault Remove="Common\Storage\Database\ColonyDB\Colony.json" />
+      <_ContentIncludedByDefault Remove="Common\Storage\Database\ColonyPartnerDB\ColonyPartner.json" />
+      <_ContentIncludedByDefault Remove="Common\Storage\Database\PartnerDB\Partner.json" />
+    </ItemGroup>
+
 </Project>
