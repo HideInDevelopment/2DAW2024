@@ -44,13 +44,16 @@ public class CatController : ControllerBase
     
     [HttpPost()]
     public async Task<ActionResult> Create([FromBody] CatDto entity){
-        var response = await _catService.AddAsync(entity);
-        if (EntityValidator.IsNullOrDefault(response))
+        try
+        {
+            await _catService.AddAsync(entity);
+        }
+        catch (Exception ex)
         {
             return NotFound();
         }
         
-        return Ok(response);
+        return Ok();
     }
     
     [HttpPut()]

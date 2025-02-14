@@ -30,9 +30,18 @@ public class CatService : ICatService
         return storedCat == null ? null : CatMapper.MapFromCatToDtoWithColony(storedCat);
     }
 
-    public Task<IDto?> AddAsync(IDto dto)
+    public async Task AddAsync(IDto dto)
     {
-        throw new NotImplementedException();
+        var carToPersist = CatMapper.MatFromCatDtoToCat(dto);
+        try
+        {
+            await _repository.AddAsync(carToPersist);
+        }
+        catch (Exception ex)
+        {
+            //throw some exception
+        }
+        
     }
 
     public Task<IDto?> UpdateAsync(IDto dto)

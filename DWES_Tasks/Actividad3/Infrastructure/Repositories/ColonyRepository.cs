@@ -23,7 +23,7 @@ public class ColonyRepository: IColonyRepository
         throw new NotImplementedException();
     }
 
-    public Task<Colony?> AddAsync(Colony entity)
+    public Task AddAsync(Colony entity)
     {
         throw new NotImplementedException();
     }

@@ -18,4 +18,17 @@ public static class ColonyMapper
             Image = colony.Image
         };
     }
+
+    public static Colony MapFromDtoToSimpleColony(ColonyDto colonyDto)
+    {
+        return new Colony()
+        {
+            Name = colonyDto.Name,
+            Location = colonyDto.Location,
+            TelephoneNumber = colonyDto.TelephoneNumber,
+            MobileNumber = colonyDto.MobileNumber,
+            Description = colonyDto.Description,
+            Image = colonyDto.Image
+        };
+    }
 }

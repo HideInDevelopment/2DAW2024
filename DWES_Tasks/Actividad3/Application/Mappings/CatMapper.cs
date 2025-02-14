@@ -32,4 +32,28 @@ public static class CatMapper
             Colony = ColonyMapper.MapFromColonyToDto(cat.Colony),
         };
     }
+
+    public static Cat MatFromCatDtoToCat(IDto dto)
+    {
+        if (dto is not CatDto catDto)
+            return new Cat();
+        
+        return new Cat()
+        {
+            Id = catDto.Id,
+            Name = catDto.Name,
+            Age = catDto.Age,
+            Race = catDto.Race,
+            Weight = catDto.Weight,
+            HealthState = catDto.HealthState,
+            ColonyId = CheckIfColony(catDto.Colony).Id,
+        };
+    }
+
+    private static Colony CheckIfColony(IDto dto)
+    {
+        return dto is not ColonyDto colonyDto 
+            ? new Colony() 
+            : ColonyMapper.MapFromDtoToSimpleColony(colonyDto);
+    }
 }

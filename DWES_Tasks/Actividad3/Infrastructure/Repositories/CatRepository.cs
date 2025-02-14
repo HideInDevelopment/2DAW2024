@@ -16,7 +16,7 @@ public class CatRepository : ICatRepository
 
     public Task<Cat?> GetByIdAsync(Guid id) => _repository.GetByIdAsync(id);
 
-    public Task<Cat?> AddAsync(Cat entity) => _repository.AddAsync(entity);
+    public Task AddAsync(Cat entity) => _repository.AddAsync(entity);
 
     public Task<Cat?> UpdateAsync(Cat entity) => _repository.UpdateAsync(entity);
 

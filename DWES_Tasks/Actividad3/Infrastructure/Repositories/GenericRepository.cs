@@ -38,17 +38,16 @@ public class GenericRepository<TKey, TEntity> : IGenericRepository<TKey, TEntity
         return entityItems.FirstOrDefault(x => x.Id != null && x.Id.Equals(id)) ?? null;
     }
 
-    public async Task<TEntity?> AddAsync(TEntity entity)
+    public async Task AddAsync(TEntity entity)
     {
         await _entity.AddAsync(entity);
         try
         {
             var affectedRows = await _context.SaveChangesAsync();
-            return affectedRows > 0 ? entity : null;
         }
         catch (Exception ex)
         {
-            return null;
+            //Throw custom exception
         }
     }
 
