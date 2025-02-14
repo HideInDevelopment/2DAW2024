@@ -9,5 +9,6 @@ public class ColonyProfile : Profile
     public ColonyProfile()
     {
         CreateMap<ColonyDto, Colony>().ReverseMap();
+        CreateMap<ColonySDto, Colony>().ReverseMap();
     }
 }

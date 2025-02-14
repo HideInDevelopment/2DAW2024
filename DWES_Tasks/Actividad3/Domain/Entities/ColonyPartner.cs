@@ -4,8 +4,8 @@ namespace Actividad3.Domain.Entities;
 public class ColonyPartner : Entity<Guid>   
 {
     public Guid ColonyId { get; set; }
-    public Colony Colony { get; set; }
+    public virtual Colony Colony { get; set; }
 
     public Guid PartnerId { get; set; }
-    public Partner Partner { get; set; }
+    public virtual Partner Partner { get; set; }
 }

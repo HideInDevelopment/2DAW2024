@@ -1,6 +1,6 @@
 namespace Actividad3.Domain.Services;
 
-public interface IGenericService<TKey, TEntity, TDto> where TEntity : class
+public interface IGenericService<in TKey, TDto>
 {
     // CRUD Operations
     Task<IEnumerable<TDto>> GetAllAsync();

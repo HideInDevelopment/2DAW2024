@@ -1,10 +1,11 @@
+using Actividad3.Domain.Entities;
 using Actividad3.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Actividad3.Domain.Repositories;
 
 public class GenericRepository<TKey, TEntity> : IGenericRepository<TKey, TEntity>
-    where TEntity : class
+    where TEntity : Entity<TKey>
 {
     private readonly DatabaseContext _context;
     private readonly DbSet<TEntity> _entity;
@@ -15,14 +16,26 @@ public class GenericRepository<TKey, TEntity> : IGenericRepository<TKey, TEntity
         _entity = context.Set<TEntity>();
     }
 
-    public async Task<IReadOnlyList<TEntity>> GetAllAsync()
+    public Task<IQueryable<TEntity>> GetAllAsync()
     {
-        return await _entity.ToListAsync();
+        IQueryable<TEntity> query = _entity.AsSplitQuery();
+
+        var navigations = _context.Model
+            .FindEntityType(typeof(TEntity))?
+            .GetNavigations();
+
+        if (navigations != null)
+        {
+            query = navigations.Aggregate(query, (current, navigation) => current.Include(navigation.Name));
+        }
+
+        return Task.FromResult(query);
     }
 
     public async Task<TEntity?> GetByIdAsync(TKey id)
     {
-        return await _entity.FindAsync(id) ?? null;
+        var entityItems = await GetAllAsync();
+        return entityItems.FirstOrDefault(x => x.Id != null && x.Id.Equals(id)) ?? null;
     }
 
     public async Task<TEntity?> AddAsync(TEntity entity)

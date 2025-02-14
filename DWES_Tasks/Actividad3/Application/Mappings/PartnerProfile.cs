@@ -9,5 +9,6 @@ public class PartnerProfile : Profile
     public PartnerProfile()
     {
         CreateMap<PartnerDto, Partner>().ReverseMap();
+        CreateMap<PartnerSDto, Partner>().ReverseMap();
     }
 }

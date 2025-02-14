@@ -20,7 +20,8 @@ builder.Services
        .AddXmlSerializerFormatters()
        .AddJsonOptions(options =>
        {
-           options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+           options.JsonSerializerOptions.PropertyNamingPolicy = null;
+           options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.Never;
        });
 
 builder.Services.AddAuthorization();

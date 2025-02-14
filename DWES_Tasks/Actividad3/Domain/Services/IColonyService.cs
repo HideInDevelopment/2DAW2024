@@ -3,6 +3,6 @@ using Actividad3.Presentation.Dtos;
 
 namespace Actividad3.Domain.Services;
 
-public interface IColonyService : IGenericService<Guid, Colony, ColonyDto>
+public interface IColonyService : IGenericService<Guid, ColonyDto>
 {
 }

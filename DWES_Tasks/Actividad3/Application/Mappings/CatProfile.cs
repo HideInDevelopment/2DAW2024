@@ -9,6 +9,7 @@ public class CatProfile : Profile
     public CatProfile()
     {
         CreateMap<CatDto, Cat>().ReverseMap();
+        CreateMap<CatWithoutColonyItemDto, Cat>().ReverseMap();
     }
     
 }

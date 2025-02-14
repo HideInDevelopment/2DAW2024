@@ -6,11 +6,6 @@ namespace Actividad3.Infrastructure.Persistence.Configurations;
 
 public class ColonyPartnerConfiguration: IEntityTypeConfiguration<ColonyPartner>
 {
-    public void Configure(ModelBuilder modelBuilder)
-    {
-        modelBuilder.ApplyConfiguration(this);
-    }
-
     public void Configure(EntityTypeBuilder<ColonyPartner> builder)
     {
         builder.HasKey(cp => cp.Id);

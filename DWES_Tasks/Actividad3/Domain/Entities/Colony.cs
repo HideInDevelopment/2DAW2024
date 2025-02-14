@@ -9,8 +9,8 @@ public class Colony : Entity<Guid>
     public int MobileNumber { get; set; }
     public string Description { get; set; }
     public string Image { get; set; }
+
+    public virtual List<Cat> CatItems { get; set; } = [];
     
-    public IReadOnlyCollection<Cat> CatItems { get; set; }
-    
-    public IReadOnlyCollection<ColonyPartner> ColonyPartnerItems { get; set; }
+    public virtual List<ColonyPartner> ColonyPartnerItems { get; set; } = [];
 }

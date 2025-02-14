@@ -1,7 +1,6 @@
 namespace Actividad3.Presentation.Dtos;
 
-#nullable disable
-public class ColonyDto : IDto
+public class ColonyWithCatIdsDto : IDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -10,7 +9,6 @@ public class ColonyDto : IDto
     public int MobileNumber { get; set; }
     public string Description { get; set; }
     public string Image { get; set; }
-    
-    public List<CatWithoutColonyItemDto> CatItems { get; set; } = [];
-    public List<PartnerSDto> PartnerItems { get; set; } = [];
+
+    public IEnumerable<Guid> CatIds { get; set; } = [];
 }

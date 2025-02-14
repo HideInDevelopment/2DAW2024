@@ -1,18 +1,11 @@
-using Actividad3.Application.Settings;
 using Actividad3.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.Extensions.Options;
 
 namespace Actividad3.Infrastructure.Persistence.Configurations;
 
 public class PartnerConfiguration : IEntityTypeConfiguration<Partner>
 {
-    public void Configure(ModelBuilder modelBuilder)
-    {
-        modelBuilder.ApplyConfiguration(this);
-    }
-
     public void Configure(EntityTypeBuilder<Partner> builder)
     {
         builder.HasKey(g => g.Id);

@@ -3,6 +3,6 @@ using Actividad3.Presentation.Dtos;
 
 namespace Actividad3.Domain.Services;
 
-public interface ICatService : IGenericService<Guid, Cat, CatDto>
+public interface ICatService : IGenericService<Guid, IDto>
 {
 }
