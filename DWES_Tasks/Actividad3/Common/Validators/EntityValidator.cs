@@ -6,7 +6,7 @@ public static class EntityValidator
     {
         if (value is null) return true;
         
-        var properties = typeof(T).GetProperties();
+        var properties = value.GetType().GetProperties();
         foreach (var property in properties)
         {
             var propertyValue = property.GetValue(value);

@@ -29,7 +29,7 @@ public static class CatMapper
             Race = cat.Race,
             Weight = cat.Weight,
             HealthState = cat.HealthState,
-            Colony = ColonyMapper.MapFromColonyToDtoWithCatIds(cat.Colony),
+            Colony = ColonyMapper.MapFromColonyToDto(cat.Colony),
         };
     }
 }

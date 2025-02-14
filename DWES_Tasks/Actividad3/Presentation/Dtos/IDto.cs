@@ -10,7 +10,4 @@ namespace Actividad3.Presentation.Dtos;
 [JsonDerivedType(typeof(ColonyWithCatIdsDto), "colonyWithCatIds")]
 [JsonDerivedType(typeof(PartnerDto), "partner")]
 [JsonDerivedType(typeof(PartnerSDto), "partnerS")]
-public interface IDto
-{
-    
-}
+public interface IDto {}

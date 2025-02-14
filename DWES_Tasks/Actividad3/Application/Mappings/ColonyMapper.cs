@@ -5,7 +5,7 @@ namespace Actividad3.Application.Profiles;
 
 public static class ColonyMapper
 {
-    public static IDto MapFromColonyToDtoWithCatIds(Colony colony)
+    public static IDto MapFromColonyToDto(Colony colony)
     {
         return new ColonyWithCatIdsDto()
         {
@@ -15,8 +15,7 @@ public static class ColonyMapper
             TelephoneNumber = colony.TelephoneNumber,
             MobileNumber = colony.MobileNumber,
             Description = colony.Description,
-            Image = colony.Image,
-            CatIds = colony.CatItems.Select(cat => cat.Id),
+            Image = colony.Image
         };
     }
 }

@@ -24,9 +24,10 @@ public class CatService : ICatService
         return result;
     }
 
-    public Task<IDto?> GetByIdAsync(Guid id)
+    public async Task<IDto?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var storedCat = await _repository.GetByIdAsync(id);
+        return storedCat == null ? null : CatMapper.MapFromCatToDtoWithColony(storedCat);
     }
 
     public Task<IDto?> AddAsync(IDto dto)
