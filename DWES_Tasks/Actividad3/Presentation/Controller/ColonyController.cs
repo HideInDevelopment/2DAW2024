@@ -1,4 +1,6 @@
 using Actividad3.Common.Validators;
+using Actividad3.Domain.Entities;
+using Actividad3.Domain.Exceptions;
 using Actividad3.Domain.Services;
 using Actividad3.Presentation.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -44,34 +46,55 @@ public class ColonyController: ControllerBase
     
     [HttpPost()]
     public async Task<ActionResult> Create([FromBody] ColonyDto entity){
-        var response = await _colonyService.AddAsync(entity);
-        if (EntityValidator.IsNullOrDefault(response))
+        try
         {
-            return NotFound();
+            await _colonyService.AddAsync(entity);
+        }
+        catch (FailOnPersistEntityException<Colony>)
+        {
+            return BadRequest($"Colony {entity.Name} can not be created.");
+        }
+        catch (EntityAlreadyExistException<Colony>)
+        {
+            return BadRequest($"Colony {entity.Name} already exists.");
         }
         
-        return Ok(response);
+        return Ok("Colony updated successfully.");
     }
     
     [HttpPut()]
-    public ActionResult Update([FromBody] ColonyDto entity){
-        var response = _colonyService.UpdateAsync(entity);
-        if (EntityValidator.IsNullOrDefault(response))
+    public async Task<ActionResult> Update([FromBody] ColonyDto entity){
+        try
         {
-            return NotFound();
+            await _colonyService.UpdateAsync(entity);
+        }
+        catch (FailOnPersistEntityException<Colony> cEx)
+        {
+            return BadRequest($"Changes on Colony {entity.Name} can not be saved.");
+        }
+        catch (EntityNotFoundException<Colony> cEx)
+        {
+            return BadRequest($"Colony {entity.Name} don't exist yet.");
         }
         
-        return Ok(response);
+        return Ok("Colony updated successfully.");
     }
     
     [HttpDelete("{key:guid}")]
-    public ActionResult Delete([FromRoute] Guid key){
-        var response = _colonyService.DeleteAsync(key);
-        if (EntityValidator.IsNullOrDefault(response))
+    public async Task<ActionResult> Delete([FromRoute] Guid key){
+        try
         {
-            return NotFound();
+            await _colonyService.DeleteAsync(key);
+        }
+        catch (FailOnPersistEntityException<Colony> cEx)
+        {
+            return BadRequest($"Colony can not be deleted.");
+        }
+        catch (EntityNotFoundException<Colony> cEx)
+        {
+            return BadRequest($"Colony doesn't exist yet.");
         }
         
-        return Ok(response);
+        return Ok("Colony deleted successfully.");
     }
 }

@@ -6,6 +6,6 @@ public interface IGenericService<in TKey, TDto>
     Task<IEnumerable<TDto>> GetAllAsync();
     Task<TDto?> GetByIdAsync(TKey id);
     Task AddAsync(TDto dto);
-    Task<TDto?> UpdateAsync(TDto dto);
-    Task<TDto?> DeleteAsync(TKey id);
+    Task UpdateAsync(TDto dto);
+    Task DeleteAsync(TKey id);
 }

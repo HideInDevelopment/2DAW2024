@@ -28,12 +28,12 @@ public class ColonyRepository: IColonyRepository
         throw new NotImplementedException();
     }
 
-    public Task<Colony?> UpdateAsync(Colony entity)
+    public Task UpdateAsync(Colony entity)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Colony?> DeleteAsync(Guid key)
+    public Task DeleteAsync(Guid key)
     {
         throw new NotImplementedException();
     }

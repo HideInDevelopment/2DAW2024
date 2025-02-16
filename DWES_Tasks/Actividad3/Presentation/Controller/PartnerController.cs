@@ -1,4 +1,6 @@
 using Actividad3.Common.Validators;
+using Actividad3.Domain.Entities;
+using Actividad3.Domain.Exceptions;
 using Actividad3.Domain.Services;
 using Actividad3.Presentation.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -44,34 +46,55 @@ public class PartnerController : ControllerBase
     
     [HttpPost()]
     public async Task<ActionResult> Create([FromBody] PartnerDto entity){
-        var response = await _partnerService.AddAsync(entity);
-        if (EntityValidator.IsNullOrDefault(response))
+        try
         {
-            return NotFound();
+            await _partnerService.AddAsync(entity);
+        }
+        catch (FailOnPersistEntityException<Partner>)
+        {
+            return BadRequest($"Partner {entity.Name} can not be created.");
+        }
+        catch (EntityAlreadyExistException<Partner>)
+        {
+            return BadRequest($"Partner {entity.Name} already exists.");
         }
         
-        return Ok(response);
+        return Ok("Partner stored successfully.");
     }
     
     [HttpPut()]
     public async Task<ActionResult> Update([FromBody] PartnerDto entity){
-        var response = await _partnerService.UpdateAsync(entity);
-        if (EntityValidator.IsNullOrDefault(response))
+        try
         {
-            return NotFound();
+            await _partnerService.UpdateAsync(entity);
+        }
+        catch (FailOnPersistEntityException<Cat> cEx)
+        {
+            return BadRequest($"Changes on Partner {entity.Name} can not be saved.");
+        }
+        catch (EntityNotFoundException<Cat> cEx)
+        {
+            return BadRequest($"Partner {entity.Name} don't exist yet.");
         }
         
-        return Ok(response);
+        return Ok("Partner updated successfully.");
     }
     
     [HttpDelete("{key:guid}")]
     public async Task<ActionResult> Delete([FromRoute] Guid key){
-        var response = await _partnerService.DeleteAsync(key);
-        if (EntityValidator.IsNullOrDefault(response))
+        try
         {
-            return NotFound();
+            await _partnerService.DeleteAsync(key);
+        }
+        catch (FailOnPersistEntityException<Partner> cEx)
+        {
+            return BadRequest($"Partner can not be deleted.");
+        }
+        catch (EntityNotFoundException<Partner> cEx)
+        {
+            return BadRequest($"Partner doesn't exist yet.");
         }
         
-        return Ok(response);
+        return Ok("Partner deleted successfully.");
     }
 }

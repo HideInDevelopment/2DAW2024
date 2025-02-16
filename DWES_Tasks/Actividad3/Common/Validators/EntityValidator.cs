@@ -5,17 +5,30 @@ public static class EntityValidator
     public static bool IsNullOrDefault<T>(T value)
     {
         if (value is null) return true;
-        
+
         var properties = value.GetType().GetProperties();
+
         foreach (var property in properties)
         {
             var propertyValue = property.GetValue(value);
-            if (propertyValue is not null && EqualityComparer<object>.Default.Equals(propertyValue,
-                    GenericValidator.GetDefaultValue(property.PropertyType)))
+            var defaultValue = GenericValidator.GetDefaultValue(property.PropertyType);
+
+            Console.WriteLine($"Property: {property.Name}, Value: {propertyValue}, Default: {defaultValue}");
+
+            switch (propertyValue)
             {
-                return false;
+                case Guid guidValue when guidValue == Guid.Empty:
+                case int and 0:
+                case string strValue when string.IsNullOrWhiteSpace(strValue):
+                    return true;
+            }
+
+            if (Equals(propertyValue, defaultValue))
+            {
+                return true;
             }
         }
-        return true;
+
+        return false;
     }
 }

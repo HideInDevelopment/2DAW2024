@@ -23,17 +23,17 @@ public class PartnerRepository: IPartnerRepository
         throw new NotImplementedException();
     }
 
-    public Task<Partner?> AddAsync(Partner entity)
+    public Task AddAsync(Partner entity)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Partner?> UpdateAsync(Partner entity)
+    public Task UpdateAsync(Partner entity)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Partner?> DeleteAsync(Guid key)
+    public Task DeleteAsync(Guid key)
     {
         throw new NotImplementedException();
     }

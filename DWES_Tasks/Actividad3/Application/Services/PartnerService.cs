@@ -25,17 +25,17 @@ public class PartnerService : IPartnerService
         throw new NotImplementedException();
     }
 
-    public Task<PartnerDto?> AddAsync(PartnerDto dto)
+    public Task AddAsync(PartnerDto dto)
     {
         throw new NotImplementedException();
     }
 
-    public Task<PartnerDto?> UpdateAsync(PartnerDto dto)
+    public Task UpdateAsync(PartnerDto dto)
     {
         throw new NotImplementedException();
     }
 
-    public Task<PartnerDto?> DeleteAsync(Guid id)
+    public Task DeleteAsync(Guid id)
     {
         throw new NotImplementedException();
     }

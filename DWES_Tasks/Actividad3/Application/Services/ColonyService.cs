@@ -25,17 +25,17 @@ public class ColonyService : IColonyService
         throw new NotImplementedException();
     }
 
-    public Task<ColonyDto?> AddAsync(ColonyDto dto)
+    public Task AddAsync(ColonyDto dto)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ColonyDto?> UpdateAsync(ColonyDto dto)
+    public Task UpdateAsync(ColonyDto dto)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ColonyDto?> DeleteAsync(Guid id)
+    public Task DeleteAsync(Guid id)
     {
         throw new NotImplementedException();
     }

@@ -5,55 +5,13 @@ namespace Actividad3.Application.Profiles;
 
 public static class CatMapper
 {
-    public static IDto MapFromCatToDtoWithColonyId(Cat cat)
+    public static Cat MapDtoToEntity<TDto>(TDto dto) where TDto : IDto, IMapToEntity<Cat>
     {
-        return new CatWithoutColonyItemDto()
-        {
-            Id = cat.Id,
-            Name = cat.Name,
-            Age = cat.Age,
-            Race = cat.Race,
-            Weight = cat.Weight,
-            HealthState = cat.HealthState,
-            ColonyId = cat.ColonyId
-        };
+        return dto.ToEntity();
     }
 
-    public static IDto MapFromCatToDtoWithColony(Cat cat)
+    public static CatDto MapEntityToDto<TEntity>(TEntity entity) where TEntity : IMapToDto<CatDto>
     {
-        return new CatDto()
-        {
-            Id = cat.Id,
-            Name = cat.Name,
-            Age = cat.Age,
-            Race = cat.Race,
-            Weight = cat.Weight,
-            HealthState = cat.HealthState,
-            Colony = ColonyMapper.MapFromColonyToDto(cat.Colony),
-        };
-    }
-
-    public static Cat MatFromCatDtoToCat(IDto dto)
-    {
-        if (dto is not CatDto catDto)
-            return new Cat();
-        
-        return new Cat()
-        {
-            Id = catDto.Id,
-            Name = catDto.Name,
-            Age = catDto.Age,
-            Race = catDto.Race,
-            Weight = catDto.Weight,
-            HealthState = catDto.HealthState,
-            ColonyId = CheckIfColony(catDto.Colony).Id,
-        };
-    }
-
-    private static Colony CheckIfColony(IDto dto)
-    {
-        return dto is not ColonyDto colonyDto 
-            ? new Colony() 
-            : ColonyMapper.MapFromDtoToSimpleColony(colonyDto);
+        return entity.ToDto();
     }
 }

@@ -1,4 +1,5 @@
 using Actividad3.Domain.Entities;
+using Actividad3.Domain.Exceptions;
 using Actividad3.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,37 +48,35 @@ public class GenericRepository<TKey, TEntity> : IGenericRepository<TKey, TEntity
         }
         catch (Exception ex)
         {
-            //Throw custom exception
+            throw new FailOnPersistEntityException<TEntity>(entity);
         }
     }
 
-    public async Task<TEntity?> UpdateAsync(TEntity entity)
+    public async Task UpdateAsync(TEntity entity)
     {
         _entity.Update(entity);
         try
         {
-            var affectedRows = await _context.SaveChangesAsync();
-            return affectedRows > 0 ? entity : null;
+            await _context.SaveChangesAsync();
         }
         catch (Exception ex)
         {
-            return null;
+            throw new FailOnPersistEntityException<TEntity>(entity);
         }
     }
     
-    public async Task<TEntity?> DeleteAsync(TKey key)
+    public async Task DeleteAsync(TKey key)
     {
         var entity = await _entity.FindAsync(key);
-        if (entity is null) return null;
+        if (entity is null) throw new EntityNotFoundException<TEntity>(entity);
         _entity.Remove(entity);
         try
         {
-            var affectedRows = await _context.SaveChangesAsync();
-            return affectedRows > 0 ? entity : null;
+            await _context.SaveChangesAsync();
         }
         catch (Exception ex)
         {
-            return null;
+            throw new FailOnPersistEntityException<TEntity>(entity);
         }
     }
 }
