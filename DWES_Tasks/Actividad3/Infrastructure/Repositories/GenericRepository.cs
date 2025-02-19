@@ -21,15 +21,6 @@ public class GenericRepository<TKey, TEntity> : IGenericRepository<TKey, TEntity
     {
         IQueryable<TEntity> query = _entity.AsSplitQuery();
 
-        var navigations = _context.Model
-            .FindEntityType(typeof(TEntity))?
-            .GetNavigations();
-
-        if (navigations != null)
-        {
-            query = navigations.Aggregate(query, (current, navigation) => current.Include(navigation.Name));
-        }
-
         return Task.FromResult(query);
     }
 

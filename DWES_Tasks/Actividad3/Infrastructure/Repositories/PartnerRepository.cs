@@ -13,10 +13,7 @@ public class PartnerRepository: IPartnerRepository
         _repository = repository;
     }
     
-    public Task<IQueryable<Partner>> GetAllAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public Task<IQueryable<Partner>> GetAllAsync() => _repository.GetAllAsync();
 
     public Task<Partner?> GetByIdAsync(Guid id)
     {

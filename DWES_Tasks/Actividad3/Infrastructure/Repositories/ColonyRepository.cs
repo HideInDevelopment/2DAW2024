@@ -13,10 +13,7 @@ public class ColonyRepository: IColonyRepository
     {
         _repository = repository;
     }
-    public Task<IQueryable<Colony>> GetAllAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public Task<IQueryable<Colony>> GetAllAsync() => _repository.GetAllAsync();
 
     public Task<Colony?> GetByIdAsync(Guid id)
     {

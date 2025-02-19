@@ -14,6 +14,7 @@ public class ColonyDto : IDto, IMapToEntity<Colony>
     public string Image { get; set; }
 
     public List<CatDto> CatItems { get; set; } = [];
+    public List<PartnerDto> PartnerItems { get; set; } = [];
     
     public Colony ToEntity()
     {

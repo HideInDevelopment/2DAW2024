@@ -19,7 +19,7 @@ public class PartnerDto : IDto, IMapToEntity<Partner>
             Name = Name,
             Age = Age,
             TelephoneNumber = TelephoneNumber,
-            Email = Email
+            Email = Email,
         };
     }
 }

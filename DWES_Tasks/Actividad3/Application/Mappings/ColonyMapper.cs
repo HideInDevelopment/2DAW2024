@@ -9,4 +9,9 @@ public static class ColonyMapper
     {
         return dto.ToEntity();
     }
+    
+    public static ColonyDto MapEntityToDto<TEntity>(TEntity entity) where TEntity : IMapToDto<ColonyDto>
+    {
+        return entity.ToDto();
+    }
 }

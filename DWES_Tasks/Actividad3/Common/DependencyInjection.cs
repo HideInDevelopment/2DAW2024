@@ -23,6 +23,7 @@ public static class DependencyInjection
         services.AddScoped<ICatRepository, CatRepository>();
         services.AddScoped<IColonyRepository, ColonyRepository>();
         services.AddScoped<IPartnerRepository, PartnerRepository>();
+        services.AddScoped<IColonyPartnerRepository, ColonyPartnerRepository>();
         
         // Services
         services.AddScoped<ICatService, CatService>();

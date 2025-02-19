@@ -9,4 +9,9 @@ public class PartnerMapper
     {
         return dto.ToEntity();
     }
+    
+    public static PartnerDto MapEntityToDto<TEntity>(TEntity entity) where TEntity : IMapToDto<PartnerDto>
+    {
+        return entity.ToDto();
+    }
 }
