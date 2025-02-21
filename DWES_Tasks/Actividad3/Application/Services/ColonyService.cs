@@ -1,5 +1,6 @@
 using Actividad3.Application.Profiles;
 using Actividad3.Domain.Entities;
+using Actividad3.Domain.Exceptions;
 using Actividad3.Domain.Repositories;
 using Actividad3.Domain.Repositories.Contracts;
 using Actividad3.Domain.Services;
@@ -22,51 +23,81 @@ public class ColonyService : IColonyService
         _partnerRepository = partnerRepository;
     }
 
-    public async Task<IEnumerable<IDto>> GetAllAsync()
+    public async Task<IEnumerable<IDto>> GetAllAsync(){
+        var (colonies, cats, colonyPartners, partners) = await GetAllDataAsync();
+        return BuildDataResponse(colonies, cats, colonyPartners, partners).ToList();
+    }
+
+    public async Task<IDto?> GetByIdAsync(Guid id)
     {
-        var queryableColonyItems = await _repository.GetAllAsync();
-        var storedColonyItems = queryableColonyItems.Select(colonyItem => colonyItem.ToDto()).ToList();
-        
-        var queryableCatItems = await _catRepository.GetAllAsync();
-        var storedCatItems = queryableCatItems.Select(catItem => catItem.ToDto()).ToList();
-        
-        var queryableColonyPartnerItems = await _colonyPartnerRepository.GetAllAsync();
-        var storedColonyPartnerItems = queryableColonyPartnerItems.Select(colonyPartnerItem => colonyPartnerItem.ToDto()).ToList();
-        
-        var queryablePartnerItems = await _partnerRepository.GetAllAsync();
-        var storedPartnerItems = queryablePartnerItems.Select(partnerItem => partnerItem.ToDto()).ToList();
-        
-        storedColonyItems.ForEach(colonyItem =>
+        var (colonies, cats, colonyPartners, partners) = await GetAllDataAsync();
+        return BuildDataResponse(colonies, cats, colonyPartners, partners).FirstOrDefault(colony => colony.Id == id);
+    }
+
+    public async Task AddAsync(IDto dto)
+    {
+        var colonyToPersist = ColonyMapper.MapDtoToEntity((ColonyDto)dto);
+        var existingColonyItems = await _repository.GetAllAsync();
+        if (existingColonyItems.Any(colony => colony.Id == colonyToPersist.Id))
         {
-            colonyItem.CatItems = storedCatItems.Where(x => x.ColonyId == colonyItem.Id).ToList();
-            colonyItem.PartnerItems = storedPartnerItems
-                .Where(partnerItem => storedColonyPartnerItems
-                    .Where(x => x.ColonyId == colonyItem.Id)
-                    .Select(colonyPartnerItem => colonyPartnerItem.PartnerId)
-                    .Contains(partnerItem.Id))
+            throw new EntityAlreadyExistException<Colony>(colonyToPersist);
+        }
+        await _repository.AddAsync(colonyToPersist);
+    }
+
+    public async Task UpdateAsync(IDto dto)
+    {
+        var colonyToUpdate = ColonyMapper.MapDtoToEntity((ColonyDto)dto);
+        var existingColonyItems = await _repository.GetAllAsync();
+        if (existingColonyItems.Any(colony => colony.Id == colonyToUpdate.Id))
+        {
+            await _repository.UpdateAsync(colonyToUpdate);
+        }
+        else
+        {
+            throw new EntityNotFoundException<Colony>(colonyToUpdate);
+        }
+    }
+
+    public async Task DeleteAsync(Guid id) => await _repository.DeleteAsync(id);
+    
+    private IEnumerable<ColonyDto> BuildDataResponse(List<Colony> colonies, List<Cat> cats, List<ColonyPartner> colonyPartners, List<Partner> partners)
+    {
+        return colonies.Select(colony =>
+        {
+            var colonyDto = colony.ToDto();
+
+            colonyDto.CatItems = cats
+                .Where(cat => cat.ColonyId == colony.Id)
+                .Select(cat => cat.ToDto())
                 .ToList();
+
+            var colonyPartnerIds = colonyPartners
+                .Where(cp => cp.ColonyId == colony.Id)
+                .Select(cp => cp.PartnerId)
+                .ToHashSet();
+
+            colonyDto.PartnerItems = partners
+                .Where(partner => colonyPartnerIds.Contains(partner.Id))
+                .Select(partner => partner.ToDto())
+                .ToList();
+
+            return colonyDto;
         });
-        
-        return storedColonyItems;
     }
-
-    public Task<IDto?> GetByIdAsync(Guid id)
+    
+    private async Task<(List<Colony>, List<Cat>, List<ColonyPartner>, List<Partner>)> GetAllDataAsync()
     {
-        throw new NotImplementedException();
-    }
+        var coloniesTask = _repository.GetAllAsync();
+        var catsTask = _catRepository.GetAllAsync();
+        var colonyPartnersTask = _colonyPartnerRepository.GetAllAsync();
+        var partnersTask = _partnerRepository.GetAllAsync();
 
-    public Task AddAsync(IDto dto)
-    {
-        throw new NotImplementedException();
-    }
+        await Task.WhenAll(coloniesTask, catsTask, colonyPartnersTask, partnersTask);
 
-    public Task UpdateAsync(IDto dto)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task DeleteAsync(Guid id)
-    {
-        throw new NotImplementedException();
+        return (coloniesTask.Result.ToList(), 
+            catsTask.Result.ToList(), 
+            colonyPartnersTask.Result.ToList(), 
+            partnersTask.Result.ToList());
     }
 }

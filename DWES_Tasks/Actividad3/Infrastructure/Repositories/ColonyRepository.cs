@@ -15,23 +15,11 @@ public class ColonyRepository: IColonyRepository
     }
     public Task<IQueryable<Colony>> GetAllAsync() => _repository.GetAllAsync();
 
-    public Task<Colony?> GetByIdAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<Colony?> GetByIdAsync(Guid id) => _repository.GetByIdAsync(id);
 
-    public Task AddAsync(Colony entity)
-    {
-        throw new NotImplementedException();
-    }
+    public Task AddAsync(Colony entity) => _repository.AddAsync(entity);
 
-    public Task UpdateAsync(Colony entity)
-    {
-        throw new NotImplementedException();
-    }
+    public Task UpdateAsync(Colony entity) => _repository.UpdateAsync(entity);
 
-    public Task DeleteAsync(Guid key)
-    {
-        throw new NotImplementedException();
-    }
+    public Task DeleteAsync(Guid key) => _repository.DeleteAsync(key);
 }

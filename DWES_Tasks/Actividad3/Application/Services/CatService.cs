@@ -53,7 +53,6 @@ public class CatService : ICatService
         {
             throw new EntityNotFoundException<Cat>(catToUpdate);
         }
-        
     }
 
     public async Task DeleteAsync(Guid id) => await _repository.DeleteAsync(id);
