@@ -13,23 +13,11 @@ public class ColonyPartnerRepository : IColonyPartnerRepository
     }
     public Task<IQueryable<ColonyPartner>> GetAllAsync() => _repository.GetAllAsync();
 
-    public Task<ColonyPartner?> GetByIdAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<ColonyPartner?> GetByIdAsync(Guid id) => _repository.GetByIdAsync(id);
 
-    public Task AddAsync(ColonyPartner entity)
-    {
-        throw new NotImplementedException();
-    }
+    public Task AddAsync(ColonyPartner entity) => _repository.AddAsync(entity);
 
-    public Task UpdateAsync(ColonyPartner entity)
-    {
-        throw new NotImplementedException();
-    }
+    public Task UpdateAsync(ColonyPartner entity) => _repository.UpdateAsync(entity);
 
-    public Task DeleteAsync(Guid key)
-    {
-        throw new NotImplementedException();
-    }
+    public Task DeleteAsync(Guid key) => _repository.DeleteAsync(key);
 }

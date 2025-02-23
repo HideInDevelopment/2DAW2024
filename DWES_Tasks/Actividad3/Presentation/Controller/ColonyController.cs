@@ -59,7 +59,7 @@ public class ColonyController: ControllerBase
             return BadRequest($"Colony {entity.Name} already exists.");
         }
         
-        return Ok("Colony updated successfully.");
+        return Ok("Colony stored successfully.");
     }
     
     [HttpPut()]

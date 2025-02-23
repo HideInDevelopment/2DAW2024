@@ -22,6 +22,8 @@ public static class EntityValidator
                 case string strValue when string.IsNullOrWhiteSpace(strValue):
                     return true;
             }
+            
+            if(property.PropertyType.IsEnum) continue;
 
             if (Equals(propertyValue, defaultValue))
             {

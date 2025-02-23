@@ -15,23 +15,11 @@ public class PartnerRepository: IPartnerRepository
     
     public Task<IQueryable<Partner>> GetAllAsync() => _repository.GetAllAsync();
 
-    public Task<Partner?> GetByIdAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<Partner?> GetByIdAsync(Guid id) => _repository.GetByIdAsync(id);
 
-    public Task AddAsync(Partner entity)
-    {
-        throw new NotImplementedException();
-    }
+    public Task AddAsync(Partner entity) => _repository.AddAsync(entity);
 
-    public Task UpdateAsync(Partner entity)
-    {
-        throw new NotImplementedException();
-    }
+    public Task UpdateAsync(Partner entity) => _repository.UpdateAsync(entity);
 
-    public Task DeleteAsync(Guid key)
-    {
-        throw new NotImplementedException();
-    }
+    public Task DeleteAsync(Guid key) => _repository.DeleteAsync(key);
 }

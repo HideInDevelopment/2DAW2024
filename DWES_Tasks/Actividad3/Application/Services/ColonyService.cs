@@ -42,6 +42,7 @@ public class ColonyService : IColonyService
         {
             throw new EntityAlreadyExistException<Colony>(colonyToPersist);
         }
+        await PerformAsyncOperation((ColonyDto)dto, colonyToPersist);
         await _repository.AddAsync(colonyToPersist);
     }
 
@@ -51,11 +52,32 @@ public class ColonyService : IColonyService
         var existingColonyItems = await _repository.GetAllAsync();
         if (existingColonyItems.Any(colony => colony.Id == colonyToUpdate.Id))
         {
+            await PerformAsyncOperation((ColonyDto)dto, colonyToUpdate);
             await _repository.UpdateAsync(colonyToUpdate);
         }
         else
         {
             throw new EntityNotFoundException<Colony>(colonyToUpdate);
+        }
+    }
+
+    private async Task PerformAsyncOperation(ColonyDto colony, Colony colonyToUpdate)
+    {
+        if (colony.PartnerItems.Count != 0)
+        {
+            var partnerItemsId = colony.PartnerItems.Select(partnerItem => partnerItem.Id).ToList();
+            var colonyPartnerItems = (await _colonyPartnerRepository.GetAllAsync()).ToList();
+            var notExistingPartnerItems = partnerItemsId.Except(colonyPartnerItems.Select(item => item.PartnerId)).ToList();
+
+            foreach (var colonyPartnerItemToStore in notExistingPartnerItems
+                         .Select(notExistingPartnerItem => new ColonyPartner()
+                     {
+                         ColonyId = colony.Id,
+                         PartnerId = notExistingPartnerItem
+                     }))
+            {
+                await _colonyPartnerRepository.AddAsync(colonyPartnerItemToStore);
+            }
         }
     }
 
